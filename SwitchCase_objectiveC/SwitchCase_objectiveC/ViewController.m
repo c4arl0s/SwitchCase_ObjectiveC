@@ -9,30 +9,39 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @end
 
 @implementation ViewController
-
+{
+    UITapGestureRecognizer *oneViewTapGesture;
+    UITapGestureRecognizer *oneImageTapGesture;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    PlayerState playerState = playerStateInjured;
+    oneViewTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOnScreen:)];
+    oneViewTapGesture.numberOfTapsRequired = 1;
+    self.view.tag = 1;
+    [self.view addGestureRecognizer:oneViewTapGesture];
     
-    switch (playerState) {
-        case playerStateOff:
-            NSLog(@"The player state is off");
-            break;
-        case playerStatePause:
-            NSLog(@"The player state is pause");
-        case playerStateInjured:
-        case playerStateNonAvailable:
-        case playerStatePlaying:
-            NSLog(@"The player state is playing");
-        default:
-            break;
+    oneImageTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOnScreen:)];
+    self.imageView.userInteractionEnabled = YES;
+    oneImageTapGesture.numberOfTapsRequired = 1;
+    self.imageView.tag = 2;
+    [self.imageView addGestureRecognizer:oneImageTapGesture];
+}
+
+- (void)didTapOnScreen:(UITapGestureRecognizer *)sender
+{
+    if(sender.view.tag == 1)
+    {
+        NSLog(@"you tapped on the view container");
     }
-    
+    else if(sender.view.tag == 2)
+    {
+        NSLog(@"you tapped on the image view");
+    }
 }
 
 
